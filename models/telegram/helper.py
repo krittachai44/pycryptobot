@@ -319,6 +319,7 @@ class TelegramHelper:
             return subprocess.getoutput(
                 f"python3 pycryptobot.py --exchange {exchange} --market {pair} {overrides}"
             )
+                # f"python3 pycryptobot.py --exchange {exchange} --config BOT-config/{pair}/config.json --market {pair} {overrides}")
 
         command = "python3 pycryptobot.py"
         command = f"{command} --startmethod {startmethod}"
@@ -328,6 +329,7 @@ class TelegramHelper:
         if exchange != "":
             command = f"{command} --exchange {exchange}"
 
+        # command = f"{command} --config BOT-config/{pair}/config.json"
         if platform.system() == "Windows":
             os.system(
                 f"start powershell -Command $host.UI.RawUI.WindowTitle = '{pair}' ; "

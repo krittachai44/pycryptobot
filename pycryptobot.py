@@ -2002,7 +2002,7 @@ def executeJob(
                     and len(_websocket.candles) == 300
                 )
             ):
-                # poll every 5 seconds (_websocket)
+                # poll every 10 seconds (_websocket)
                 s.enter(
                     5,
                     1,
@@ -2058,6 +2058,7 @@ def main():
             app.notifyTelegram(message)
 
         # initialise and start application
+        time.sleep(7)
         trading_data = app.startApp(app, account, state.last_action)
 
         def runApp(_websocket):

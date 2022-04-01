@@ -472,9 +472,9 @@ class AuthAPI(AuthAPIBase):
             def calculate_price(row):
                 if row.type == "LIMIT" and float(row.price) > 0:
                     return row.price
-                elif row.action == "buy":
+                elif row.action == "buy" and float(row.filled) > 0:
                     return float(row.cummulativeQuoteQty) / float(row.filled)
-                elif row.action == "sell":
+                elif row.action == "sell" and float(row.filled) > 0:
                     return float(row.cummulativeQuoteQty) / float(row.filled)
                 else:
                     return row.price
@@ -777,9 +777,9 @@ class AuthAPI(AuthAPIBase):
             elif resp.status_code == 429 and (
                 resp_message.startswith("Too much request weight used")
             ):
-                message = f"{method} ({resp.status_code}) {self._api_url}{uri} - {resp_message} (sleeping for 5 seconds to prevent being banned)"
+                message = f"{method} ({resp.status_code}) {self._api_url}{uri} - {resp_message} (sleeping for 25 seconds to prevent being banned)"
                 Logger.error(f"Error: {message}")
-                time.sleep(5)
+                time.sleep(25)
                 return {}
             elif resp.status_code != 200:
                 message = f"{method} ({resp.status_code}) {self._api_url}{uri} - {resp_message}"
